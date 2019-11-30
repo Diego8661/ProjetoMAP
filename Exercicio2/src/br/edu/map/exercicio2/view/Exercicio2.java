@@ -20,7 +20,7 @@ public class Exercicio2 {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, Exception {
         // TODO code application logic here
         Scanner ler = new Scanner(System.in);
         String op; //op = opção
@@ -48,7 +48,7 @@ public class Exercicio2 {
                 System.out.println("Sistema: ");
                 pro.getEsp().setSistema(ler.nextLine());
                 System.out.println("Detalhe: ");
-                pro.getEsp().setDetalhes(ler.nextLine());
+                pro.getEsp().setDetalhe(ler.nextLine());
                 
                 dao.inserir(pro);
                 
@@ -110,7 +110,7 @@ public class Exercicio2 {
                     
                     System.out.println("Novo detalhe: ");
                     String novo_detalhe = ler.nextLine();
-                    pro.getEsp().setDetalhes(novo_detalhe.equals("") ? pro.getEsp().getDetalhes() : novo_detalhe);
+                    pro.getEsp().setDetalhe(novo_detalhe.equals("") ? pro.getEsp().getDetalhe() : novo_detalhe);
                     
                     dao.editar(pro);
                     System.out.println("Registro atualizado com SUCESSO!");

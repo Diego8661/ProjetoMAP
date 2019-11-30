@@ -21,6 +21,12 @@ public class MensagensUtil {
     private static ResourceBundle resource = ResourceBundle.getBundle("mensagens", LOCALE_PT_BR);
     
     public static final String MSG_MENU_IDIOMA = "msg.menu.idioma";
+    public static final String MSG_MENUITEM_PORTUGUES = "msg.menuItem.portugues";
+    public static final String MSG_MENUITEM_INGLES = "msg.menuItem.ingles";
+    public static final String MSG_MENUITEM_ESPANHOL = "msg.menuItem.espanhol";
+    public static final String MSG_MENU_RELATORIO = "msg.menu.relatorio";
+    public static final String MSG_MENUITEM_LISTA_PRODUTO = "msg.menuItem.listaProduto";
+    public static final String MSG_MENUITEM_LISTA_PRODUTO_PRECO = "msg.menuItem.listaProdutoPreco";
     public static final String MSG_TITLE_PRODUTO_NOVO = "msg.title.produto.novo";
     public static final String MSG_TITLE_PRODUTO_EDITAR = "msg.title.produto.editar";
     public static final String MSG_TITLE_PRODUTOS = "msg.title.produtos";

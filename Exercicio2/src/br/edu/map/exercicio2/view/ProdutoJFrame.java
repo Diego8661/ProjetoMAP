@@ -44,7 +44,7 @@ public class ProdutoJFrame extends javax.swing.JFrame {
             textFabricante.setText(selecionado.getEsp().getFabricante());
             textCor.setText(selecionado.getEsp().getCor());
             textSistema.setText(selecionado.getEsp().getSistema());
-            textDetalhe.setText(selecionado.getEsp().getDetalhes());
+            textDetalhe.setText(selecionado.getEsp().getDetalhe());
        }
        this.labelNome.setText(MensagensUtil.getString(MensagensUtil.MSG_LABEL_NOME));
        this.labelPreco.setText(MensagensUtil.getString(MensagensUtil.MSG_LABEL_PRECO));
@@ -225,7 +225,7 @@ public class ProdutoJFrame extends javax.swing.JFrame {
             p.getEsp().setFabricante(fabricante);
             p.getEsp().setCor(cor);
             p.getEsp().setSistema(sistema);
-            p.getEsp().setDetalhes(detalhe);
+            p.getEsp().setDetalhe(detalhe);
 
             try {
                 dao.inserir(p);
@@ -240,7 +240,7 @@ public class ProdutoJFrame extends javax.swing.JFrame {
             p.getEsp().setFabricante(textFabricante.getText());
             p.getEsp().setCor(textCor.getText());
             p.getEsp().setSistema(textSistema.getText());
-            p.getEsp().setDetalhes(textDetalhe.getText());
+            p.getEsp().setDetalhe(textDetalhe.getText());
             
             try {
                 dao.editar(p);

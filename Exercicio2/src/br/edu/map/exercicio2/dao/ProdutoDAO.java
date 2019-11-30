@@ -5,6 +5,7 @@
  */
 package br.edu.map.exercicio2.dao;
 
+import br.edu.map.exercicio2.model.Especificacao;
 import br.edu.map.exercicio2.util.ConexaoFactory;
 import br.edu.map.exercicio2.model.Produto;
 import java.sql.Connection;
@@ -36,7 +37,7 @@ public class ProdutoDAO {
         st.setString(1, produto.getEsp().getFabricante());
         st.setString(2, produto.getEsp().getCor());
         st.setString(3, produto.getEsp().getSistema());
-        st.setString(4, produto.getEsp().getDetalhes());
+        st.setString(4, produto.getEsp().getDetalhe());
         
         st.executeUpdate();
         
@@ -76,7 +77,7 @@ public class ProdutoDAO {
         st.setString(4, produto.getEsp().getCor());
         st.setString(5, produto.getEsp().getFabricante());
         st.setString(6, produto.getEsp().getSistema());
-        st.setString(7, produto.getEsp().getDetalhes());
+        st.setString(7, produto.getEsp().getDetalhe());
         st.setInt(8, produto.getEsp().getCodigo());
         
         st.executeUpdate();
@@ -115,13 +116,13 @@ public class ProdutoDAO {
             p.getEsp().setCor(cor);
             p.getEsp().setFabricante(fabricante);
             p.getEsp().setSistema(sistema);
-            p.getEsp().setDetalhes(detalhe);
+            p.getEsp().setDetalhe(detalhe);
         }
         con.close();
         return p;
     }
     
-    public List<Produto> exibir() throws SQLException{
+    public List<Produto> exibir() throws Exception{
         List<Produto> lista = new ArrayList<>();
         con = ConexaoFactory.getConexao();
         
@@ -134,20 +135,21 @@ public class ProdutoDAO {
             int codigo = rs.getInt(1);
             String nome = rs.getString("nome");
             float preco = rs.getFloat("preco");
-            String cor = rs.getString("cor");
             String fabricante = rs.getString("fabricante");
+            String cor = rs.getString("cor");
             String sistema = rs.getString("sistema");
             String detalhe = rs.getString("detalhe");
             
             Produto p = new Produto();
+            //p.setEsp(new Especificacao());
             
             p.setCodigo(codigo);
             p.setNome(nome);
             p.setPreco(preco);
-            p.getEsp().setCor(cor);
             p.getEsp().setFabricante(fabricante);
+            p.getEsp().setCor(cor);
             p.getEsp().setSistema(sistema);
-            p.getEsp().setDetalhes(detalhe);
+            p.getEsp().setDetalhe(detalhe);
             
             lista.add(p);
         }
@@ -182,7 +184,7 @@ public class ProdutoDAO {
             p.getEsp().setCor(cor);
             p.getEsp().setFabricante(fabricante);
             p.getEsp().setSistema(sistema);
-            p.getEsp().setDetalhes(detalhe);
+            p.getEsp().setDetalhe(detalhe);
             
             lista.add(p);
         }
@@ -204,5 +206,41 @@ public class ProdutoDAO {
         st.executeUpdate();
         
         con.close();
+    }
+    public List<Produto> listarPreco() throws Exception{
+        List<Produto> lista = new ArrayList<>();
+        
+        con = ConexaoFactory.getConexao();
+        
+        sql = "select * from produto where produto.preco < 1000";
+        
+        st = con.prepareStatement(sql);
+        
+        ResultSet rs = st.executeQuery();
+        
+        while(rs.next()){
+            int codigo = rs.getInt(1);
+            String nome = rs.getString("nome");
+            float preco = rs.getFloat("preco");
+            /*String fabricante = rs.getString("fabricante");
+            String cor = rs.getString("cor");
+            String sistema = rs.getString("sistema");
+            String detalhe = rs.getString("detalhe");*/
+            
+            Produto p = new Produto();
+            //p.setEsp(new Especificacao());
+            
+            p.setCodigo(codigo);
+            p.setNome(nome);
+            p.setPreco(preco);
+            /*p.getEsp().setFabricante(fabricante);
+            p.getEsp().setCor(cor);
+            p.getEsp().setSistema(sistema);
+            p.getEsp().setDetalhe(detalhe);*/
+            
+            lista.add(p);
+        }
+        con.close();
+        return lista;
     }
 }

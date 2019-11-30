@@ -8,6 +8,7 @@ package br.edu.map.exercicio2.view;
 import br.edu.map.exercicio2.dao.ProdutoDAO;
 import br.edu.map.exercicio2.model.Produto;
 import br.edu.map.exercicio2.util.MensagensUtil;
+import br.edu.map.exercicio2.util.RelatorioManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.swing.JRViewer;
 
 /**
  *
@@ -45,6 +49,12 @@ public class ProdutosJFrame extends javax.swing.JFrame {
     
     private void setProperties(){
         menuIdioma.setText(MensagensUtil.getString(MensagensUtil.MSG_MENU_IDIOMA));
+        menuItemptBR.setText(MensagensUtil.getString(MensagensUtil.MSG_MENUITEM_PORTUGUES));
+        menuItemenUS.setText(MensagensUtil.getString(MensagensUtil.MSG_MENUITEM_INGLES));
+        menuItemesES.setText(MensagensUtil.getString(MensagensUtil.MSG_MENUITEM_ESPANHOL));
+        menuRelatorio.setText(MensagensUtil.getString(MensagensUtil.MSG_MENU_RELATORIO));
+        menuItemListaProdutos.setText(MensagensUtil.getString(MensagensUtil.MSG_MENUITEM_LISTA_PRODUTO));
+        menuItemLPPreco.setText(MensagensUtil.getString(MensagensUtil.MSG_MENUITEM_LISTA_PRODUTO_PRECO));
         labelProdutos.setText(MensagensUtil.getString(MensagensUtil.MSG_TITLE_PRODUTOS));
         buttonNovo.setText(MensagensUtil.getString(MensagensUtil.MSG_BUTTON_NOVO));
         buttonEditar.setText(MensagensUtil.getString(MensagensUtil.MSG_BUTTON_EDITAR));
@@ -86,7 +96,7 @@ public class ProdutosJFrame extends javax.swing.JFrame {
                 model.setValueAt(lista.get(i).getEsp().getFabricante(), i, 3);
                 model.setValueAt(lista.get(i).getEsp().getCor(), i, 4);
                 model.setValueAt(lista.get(i).getEsp().getSistema(), i, 5);
-                model.setValueAt(lista.get(i).getEsp().getDetalhes(), i, 6);
+                model.setValueAt(lista.get(i).getEsp().getDetalhe(), i, 6);
             }
             
             tableProdutos.setModel(model);
@@ -120,6 +130,9 @@ public class ProdutosJFrame extends javax.swing.JFrame {
         menuItemptBR = new javax.swing.JMenuItem();
         menuItemenUS = new javax.swing.JMenuItem();
         menuItemesES = new javax.swing.JMenuItem();
+        menuRelatorio = new javax.swing.JMenu();
+        menuItemListaProdutos = new javax.swing.JMenuItem();
+        menuItemLPPreco = new javax.swing.JMenuItem();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -229,6 +242,26 @@ public class ProdutosJFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(menuIdioma);
 
+        menuRelatorio.setText("Relatórios");
+
+        menuItemListaProdutos.setText("Listar Produtos");
+        menuItemListaProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemListaProdutosActionPerformed(evt);
+            }
+        });
+        menuRelatorio.add(menuItemListaProdutos);
+
+        menuItemLPPreco.setText("Menos de R$ 1000");
+        menuItemLPPreco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemLPPrecoActionPerformed(evt);
+            }
+        });
+        menuRelatorio.add(menuItemLPPreco);
+
+        jMenuBar1.add(menuRelatorio);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -295,7 +328,7 @@ public class ProdutosJFrame extends javax.swing.JFrame {
 
     private void buttonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSairActionPerformed
         // TODO add your handling code here:
-        dispose();
+        System.exit(0);
     }//GEN-LAST:event_buttonSairActionPerformed
 
     private void buttonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNovoActionPerformed
@@ -363,6 +396,35 @@ public class ProdutosJFrame extends javax.swing.JFrame {
         setProperties();
     }//GEN-LAST:event_menuItemenUSActionPerformed
 
+    private void menuItemListaProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListaProdutosActionPerformed
+        try {
+            // TODO add your handling code here:
+            JasperPrint relatorio = RelatorioManager.gerarRelatorioProduto(dao.exibir());
+            JFrame frame = new JFrame();
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            JRViewer viewer = new JRViewer(relatorio);
+            frame.add(viewer);
+            frame.setVisible(true);
+            
+        }   catch (Exception ex) {
+            Logger.getLogger(ProdutosJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_menuItemListaProdutosActionPerformed
+
+    private void menuItemLPPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLPPrecoActionPerformed
+        // TODO add your handling code here:
+        try{
+            JasperPrint relatorio = RelatorioManager.gerarRelatorioProdutoPreco(dao.listarPreco());
+            JFrame frame = new JFrame();
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            JRViewer viewer = new JRViewer(relatorio);
+            frame.add(viewer);
+            frame.setVisible(true);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_menuItemLPPrecoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -411,9 +473,12 @@ public class ProdutosJFrame extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelProdutos;
     private javax.swing.JMenu menuIdioma;
+    private javax.swing.JMenuItem menuItemLPPreco;
+    private javax.swing.JMenuItem menuItemListaProdutos;
     private javax.swing.JMenuItem menuItemenUS;
     private javax.swing.JMenuItem menuItemesES;
     private javax.swing.JMenuItem menuItemptBR;
+    private javax.swing.JMenu menuRelatorio;
     private javax.swing.JTable tableProdutos;
     private javax.swing.JTextField textFieldBuscar;
     // End of variables declaration//GEN-END:variables

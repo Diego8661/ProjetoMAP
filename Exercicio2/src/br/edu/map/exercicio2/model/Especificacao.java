@@ -14,9 +14,9 @@ public class Especificacao {
     private String fabricante;
     private String cor;
     private String sistema;
-    private String detalhes;
-    
+    private String detalhe;
 
+  
     public int getCodigo() {
         return codigo_especificacao;
     }
@@ -49,12 +49,12 @@ public class Especificacao {
         this.sistema = sistema;
     }
 
-    public String getDetalhes() {
-        return detalhes;
+    public String getDetalhe() {
+        return detalhe;
     }
 
-    public void setDetalhes(String detalhes) {
-        this.detalhes = detalhes;
+    public void setDetalhe(String detalhes) {
+        this.detalhe = detalhes;
     }
     
     @Override
@@ -71,7 +71,7 @@ public class Especificacao {
                 .append(sistema)
                 .append("\n")
                 .append("Detalhe: ")
-                .append(detalhes)
+                .append(detalhe)
                 .append("\n");
         
         return sb.toString();

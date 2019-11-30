@@ -18,6 +18,13 @@ public class Produto {
     public Produto() {
         this.esp = new Especificacao();
     } 
+
+    public Produto(int codigo_produto, String nome, float preco, Especificacao esp) {
+        this.codigo_produto = codigo_produto;
+        this.nome = nome;
+        this.preco = preco;
+        this.esp = esp;
+    }
   
     public int getCodigo() {
         return codigo_produto;
@@ -43,13 +50,30 @@ public class Produto {
         this.preco = preco;
     }
 
+    public String getFabricante(){
+        return esp.getFabricante();
+    }
+    
+    public String getCor() {
+        return esp.getCor();
+    }
+    
+    public String getSistema() {
+        return esp.getSistema();
+    }
+    
+    public String getDetalhe() {
+        return esp.getDetalhe();
+    }
+    
     public Especificacao getEsp() {
         return esp;
     }
 
     public void setEsp(Especificacao esp) {
-        this.esp = esp;
+        this.esp = esp; 
     }
+    
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
